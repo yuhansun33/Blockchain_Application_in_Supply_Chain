@@ -1,24 +1,49 @@
-import logo from './logo.svg';
+import Web3 from "web3";
+import { useState,  useEffect} from "react";
+import supplychain from "./contracts/SupplyChain.json";
 import './App.css';
 
 function App() {
+  const [state, setState] = useState({
+    web3: null,
+    contract: null,
+  });
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    const provider = new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545");
+
+    async function template() {
+      const web3 = new Web3(provider);
+      const networkId = await web3.eth.net.getId();
+      const deployedNetwork = supplychain.networks[networkId];
+      const contract = new web3.eth.Contract(
+        supplychain.abi,
+        deployedNetwork.address
+      );
+      console.log(contract);
+      setState({ web3: web3, contract: contract });
+    }
+    provider && template();
+  }, []);
+  useEffect(() => 
+  {
+    const { contract } = state;
+    async function readData() {
+      const data = await contract.methods.get().call();
+      setCount(data);
+    }
+    contract && readData();
+  }, [state]);
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div>
+    <p>Show number {count} </p>
+    <button onClick={() => setCount(count)}>
+        Click me
+      </button>
+  </div>
   );
 }
 

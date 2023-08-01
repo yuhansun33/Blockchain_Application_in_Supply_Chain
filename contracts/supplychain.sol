@@ -11,6 +11,7 @@ enum ProductState{
 }
 
 contract SupplyChain{
+    uint test = 10;
     struct Product{
         address ProductID;
         string ProductName;
@@ -46,5 +47,8 @@ function getProduct(address id) public view returns (address adrr,string memory 
         
         return (p.ProductID, p.ProductName, p.ProductType, p.ProductPrice,p.state);
     }
+function get() public view returns (uint256) {
+        return test;
+}
 
 }
