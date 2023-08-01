@@ -1,6 +1,6 @@
-//SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: GPL-3.0
 
-pragma solidity >=0.4.22 <0.9.0;
+pragma solidity >=0.5.0 <0.9.0;
 
 enum ProductState{
     SETTING,
@@ -48,6 +48,3 @@ function getProduct(address id) public view returns (address adrr,string memory 
     }
 
 }
-
-
-
