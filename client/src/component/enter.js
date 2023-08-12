@@ -15,7 +15,7 @@ const Enter = ({ state }) => {
     async function enterAddress() {
         const { contract } = state;
         const Manufacturer_Address = document.querySelector("#value").value;
-        await contract.methods.enterAddress(Manufacturer_Address).call();
+        await contract.methods.enterAddress(Manufacturer_Address).send({ from: Manufacturer_Address, gas: '1000000' });
         alert("Login is successul");
         window.location.reload();
 
