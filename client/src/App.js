@@ -2,16 +2,27 @@ import Web3 from "web3";
 import { useState, useEffect } from "react";
 import supplychain from "./contracts/SupplyChain.json";
 import './App.css';
-import Test from './component/test';
+import './styles.css';
+
+
 import Enter from './component/enter';
+import Address from "./component/address";
+import Search from "./component/Search";
+import AllProducts from './component/AllProducts';
+// import Modal from './component/ProductsId';
+import ProductsId from './component/ProductsId';
+import Navbar from "./Navbar";
 
 function App() {
+
+
+
   const [state, setState] = useState({
     web3: null,
     contract: null,
   });
   // const [count, setCount] = useState(0);
-  const [address, setAdress] = useState([]);
+
   useEffect(() => {
     const provider = new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545");
 
@@ -29,32 +40,39 @@ function App() {
 
     provider && template();
   }, []);
-  // useEffect(() => {
-  //   const { contract } = state;
-  //   async function readData() {
-  //     const data = await contract.methods.get().call();
-  //     setCount(data);
-  //   }
-  //   contract && readData();
-  // }, [state]);
 
-  // async function writeData() {
-  // const { contract } = state;
-  // const  data = document.querySelector("#value").value;
-  //   await contract.methods
-  //     .createProduct('cup', 'iron', 200)
-  //     .send({ from: "0x83AF84662Bc10b5A519141af9163ff2E6E496ED0", gas: '1000000' });
-  //   window.location.reload();
 
-  // }
-  useEffect(() => {
-    const { contract } = state;
-    async function getadress() {
-      const address = await contract.methods.getAllProductAddr().call();
-      setAdress(address);
-    }
-    contract && getadress();
-  }, [state]);
+
+  let component
+
+  switch (window.location.pathname) {
+    case "/":
+      component = <Enter state={state} />
+      break
+    case "/component/ProductsId":
+      component = <ProductsId state={state} />
+      break
+
+    case "/component/AllProducts":
+      component = <AllProducts state={state} />
+      break
+    case "/component/address":
+      component = <Address state={state} />
+      break
+
+    case "/component/Search":
+      component = <Search state={state} />
+      break
+    default: // Do nothing
+
+  }
+
+
+
+
+
+
+
 
 
 
@@ -63,42 +81,33 @@ function App() {
 
   return (
 
-    <div>
-      <Enter state={state} />
-      <Test state={state} />
-      <p>Show adress<br /></p>
-      <table>
-        <tbody >
-          {address.map((addr) => {
-            return (
-              <tr >
-                <td
-                  style={{
-                    backgroundColor: "dodgerblue",
-                    border: "1px solid white",
-                    borderCollapse: "collapse",
-                    padding: "7px",
-                    width: "100px",
-                    color: "white",
 
-                  }}
-                >
-                  {addr}
-                </td>
-              </tr>
 
-            );
-          })}
-        </tbody>
-      </table>
 
-      {/* <button onClick={writeData}>
-        Click me
-      </button> */}
+
+
+
+    <div style={{ zIndex: 2 }}>
+      <Navbar></Navbar>
+      {component}
+
+
+      {/* <button onClick={() => { setEnter(true); }} style={{ width: 'auto' }}>Enter</button>
+      {openEnter && <Enter closeEnter={setEnter} state={state} />} */}
+      {/* <Test state={state} />
+      <Product state={state} /> */}
+
+
 
 
     </div>
+
+
+
   );
+
+
+
 }
 
 export default App;
