@@ -9,10 +9,16 @@ import Enter from './component/enter';
 import Address from "./component/address";
 import Search from "./component/Search";
 import AllProducts from './component/AllProducts';
-// import Modal from './component/ProductsId';
 import ProductsId from './component/ProductsId';
 import Navbar from "./Navbar";
 
+import Zero from './component/Zero';
+import One from "./component/One";
+import Two from "./component/Two";
+import Three from "./component/Three";
+import Four from "./component/Four";
+
+import Test from "./test";
 function App() {
 
 
@@ -21,7 +27,7 @@ function App() {
     web3: null,
     contract: null,
   });
-  // const [count, setCount] = useState(0);
+  // 連線至ganache區塊鏈
 
   useEffect(() => {
     const provider = new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545");
@@ -42,7 +48,7 @@ function App() {
   }, []);
 
 
-
+  // 各種分頁
   let component
 
   switch (window.location.pathname) {
@@ -63,42 +69,35 @@ function App() {
     case "/component/Search":
       component = <Search state={state} />
       break
+    case "/component/Zero":
+      component = <Zero state={state} />
+      break
+    case "/component/One":
+      component = <One state={state} />
+      break
+    case "/component/Two":
+      component = <Two state={state} />
+      break
+
+    case "/component/Three":
+      component = <Three state={state} />
+      break
+    case "/component/Four":
+      component = <Four state={state} />
+      break
+    case "/test":
+      component = <Test state={state} />
+      break
     default: // Do nothing
 
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
   return (
-
-
-
-
-
-
 
     <div style={{ zIndex: 2 }}>
       <Navbar></Navbar>
       {component}
-
-
-      {/* <button onClick={() => { setEnter(true); }} style={{ width: 'auto' }}>Enter</button>
-      {openEnter && <Enter closeEnter={setEnter} state={state} />} */}
-      {/* <Test state={state} />
-      <Product state={state} /> */}
-
-
-
 
     </div>
 

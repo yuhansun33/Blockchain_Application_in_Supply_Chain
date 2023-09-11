@@ -1,34 +1,27 @@
 import { useState, useEffect } from "react";
 import State from './State';
+import Supplier from './Supplier';
 export default function AllProducts({ state }) {
-    // const [count, setCount] = useState(0);
+
     const [product, setProduct] = useState([]);
+    const [record, setRecord] = useState([]);
 
-    // const { contract } = state;
-
-    // useEffect(() => {
-
-    //     async function readData() {
-    //         const data = await contract.methods.get().call();
-    //         setCount(data);
-    //     }
-    //     contract && readData();
-    // }, [contract]);
-
+    // 取得所有區塊鏈上產品的所有紀錄
     useEffect(() => {
         const { contract } = state;
         async function getproduct() {
             const address = await contract.methods.getAllProduct().call();
             setProduct(address);
+
         }
         contract && getproduct();
     }, [state]);
 
 
-
+    // 控制彈出視窗的開關
     const [isOpen, setOpen] = useState(false);
-    const [record, setRecord] = useState([]);
-
+    const [open, setopen] = useState(false);
+    // 取得特定產品的狀態
     async function getProductState(address) {
         const { contract } = state;
         const record = await contract.methods.getProductState(address).call();
@@ -36,43 +29,16 @@ export default function AllProducts({ state }) {
         setOpen(true)
 
     }
+    // modal打開
+    function openModal() {
+        setopen(true);
+    }
 
 
 
-    // const test = async(event)=>{
-    //   event.preventDefault();
-    //   const {contract}=state;
-    //   const name = document.querySelector("#name").value;
-    //   const message = document.querySelector("#message").value;
-    //   //const amount = document.querySelector("#amount").value;
-    //   const amount = {value:ethers.utils.parseEther("0.001")}
-    //   const transaction = await contract.buyChai(name,message,amount)
-    //   await transaction.wait();
-    //   alert("Transaction is successul");
-    //   window.location.reload();
-    // }
     return (
-        //   <div className="center">
-        //    <h1>Thanks</h1>
-        //     <form onSubmit={buyChai}>
-        //       <div className="inputbox">
-        //         <input type="text" required="required" id="name" />
-        //         <span>Name</span>
-        //       </div>
-        //       <div className="inputbox">
-        //         <input type="text" required="required" id="message" />
-        //         <span>Message</span>
-        //       </div>
-        //       <div className="inputbox">
-        //         <input type="submit" value="Pay"  disabled={!state.contract}/>
-        //       </div>
-        //     </form>
-
-        //     </div>
-        <div style={{ position: 'fixed', top: '15%', left: '2.5%' }} class='animate'>
-
-            {/* <p>{count}</p> */}
-
+        // 顯示所有產品的紀錄
+        <div style={{ position: 'initial', top: '15%', left: '2.5%' }} class='animate'>
             <table>
                 <thead>
                     <tr>
@@ -105,8 +71,9 @@ export default function AllProducts({ state }) {
 
                                     }}
                                 >
+                                    {/* 可以觸發modal且去呼叫getProductState */}
                                     <button onClick={() => getProductState(pd.ProductID)} style={{ position: 'relative', width: '100%', backgroundColor: "#C2C287" }}>{pd.ProductID}</button>
-                                    <State open={isOpen} isClose={() => setOpen(false)} record={record}>
+                                    <State open={isOpen} isClose={() => setOpen(false)} record={record} Id={pd.ProductID}>
                                     </State>
 
                                 </td>
@@ -123,6 +90,19 @@ export default function AllProducts({ state }) {
                                 >
                                     {pd.Manufacturer}
                                 </td>
+                                {/* <td
+                                    style={{
+                                        backgroundColor: "#dcdc9e",
+                                        border: "1px solid white",
+                                        borderCollapse: "collapse",
+                                        padding: "7px",
+                                        width: "50px",
+                                        color: "black",
+
+                                    }}
+                                >
+                                    {pd.Receiver}
+                                </td> */}
 
 
                                 <td
@@ -203,6 +183,23 @@ export default function AllProducts({ state }) {
                                     }}
                                 >
                                     {pd.Serial}
+                                </td>
+                                <td
+                                    style={{
+                                        backgroundColor: "#dcdc9e",
+                                        border: "1px solid white",
+                                        borderCollapse: "collapse",
+                                        padding: "7px",
+                                        width: "50px",
+                                        color: "black",
+
+                                    }}
+                                >
+                                    {/* 可以觸發modal且去呼叫Supplier輸入頁面 */}
+                                    <button onClick={openModal} style={{ position: 'relative', width: '100%', backgroundColor: "#C2C287" }}>Supplier</button>
+                                    <Supplier state={state} open={open} Close={() => setopen(false)} Id={pd.ProductID} Ad={pd.Manufacturer}>
+                                    </Supplier>
+
                                 </td>
                             </tr>
 

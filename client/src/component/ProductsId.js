@@ -1,28 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from "react";
-// const Modal_style = {
-//     position: 'fixed',
-//     top: '13%',
-//     left: '32%',
-//     // transform: 'translate(-50%,-50%)',
-//     backgroundColor: 'white',
-//     padding: '50px',
-//     zIndex: 1000
 
-
-// }
-
-// const OverStyle = {
-//     position: 'fixed',
-//     top: 0,
-//     left: 0,
-//     right: 0,
-//     bottom: 0,
-//     backgroundColor: 'rgba(0,0,0,0.3)',
-//     zIndex: 1
-
-// }
-
+// 取得所有產品編號
 export default function ProductsId({ state }) {
 
     const [address, setAdress] = useState([]);
@@ -39,13 +18,12 @@ export default function ProductsId({ state }) {
 
 
 
-
-
     return (
         <>
 
 
             <div style={{ position: 'fixed', top: '13%', left: '37%' }} class='animate'>
+                {/* 列出所有產品編號 */}
                 <p>Show ID<br /></p>
                 <table width="20%">
                     <tbody >

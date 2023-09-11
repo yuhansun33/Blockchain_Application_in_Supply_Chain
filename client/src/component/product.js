@@ -4,10 +4,10 @@ import React from 'react'
 const Modal_style = {
     position: 'fixed',
     top: '13%',
-    left: '32%',
+    left: '25%',
     // transform: 'translate(-50%,-50%)',
     backgroundColor: 'white',
-    padding: '50px',
+    padding: '60px',
     zIndex: 1000
 
 
@@ -19,51 +19,64 @@ const OverStyle = {
     left: 0,
     right: 0,
     bottom: 0,
+
     backgroundColor: 'rgba(0,0,0,0.3)',
     zIndex: 1
 
 }
-
-export default function Product({ open, isClose, record }) {
+export default function Product({ open, isClose, record, com }) {
 
     if (!open) return null
 
-    // useEffect(() => {
-    // const { contract } = state;
-    //     async function readData() {
-    //         const data = await contract.methods.getManufacturerAddress().call();
-    //         setAdress(data);
-    //     }
-    //     contract && readData();
-    // }, [state]);
-
-
-    // async function productAddress() {
-    //     const { contract } = state;
-    //     const Product_Address = document.querySelector("#product").value;
-    //     const record = await contract.methods.getProduct(Product_Address).call();
-    //     setRecord(record)
-
-    // }
 
 
     return (
         <>
+            {/* 顯示所有產品細項以及最新狀態 */}
             <div style={OverStyle} />
 
 
             <div style={Modal_style} class='animate'>
-                <td>產品ID : </td><td>{record[2]}</td><br></br>
 
 
-                <td>製造商 : </td><td>{record[1]}</td><br></br>
 
-                <td>商品名稱 : </td><td>{record[3]}</td><br></br>
-                <td>商品材質 : </td><td>{record[4]}</td><br></br>
-                <td>價格 : </td><td>{record[5]}</td><br></br>
-                <td>紀錄時間 : </td><td>{new Date(record[6] * 1000).toLocaleString()}</td><br></br>
-                <td>狀態 : </td><td>{record[7]}</td><br></br>
-                <td>階段 : </td><td>{record[0]}</td><br></br>
+
+                <table>
+                    <tr>
+                        <td colspan="2"> 產品ID :{record[2]}</td>
+                    </tr>
+                    <tr>
+                        <td td colspan="2">製造商 :{record[1]}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">下游 : {record[3]}</td>
+                    </tr>
+                    <tr>
+
+                        <td>商品名稱 :{record[4]}</td>
+                        <td>商品類別 :{record[5]}</td>
+                    </tr>
+                    <tr>
+
+                        <td>價格 :{record[6]}</td>
+                        <td>紀錄時間 :{new Date(record[7] * 1000).toLocaleString()}</td>
+                    </tr>
+                    <tr>
+
+                        <td>狀態 :{record[8]}</td>
+                        <td>階段 :{record[0]}</td>
+                    </tr>
+
+                </table>
+                <td>上游 : </td>
+                {com.map((pd) => {
+                    return (<tr><td>{pd}</td></tr>)
+                })}
+
+
+
+
+
                 <button onClick={isClose} >Close</button>
 
 
