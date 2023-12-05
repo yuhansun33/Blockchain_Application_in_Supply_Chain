@@ -4,8 +4,12 @@ import supplychain from "./contracts/SupplyChain.json";
 import './App.css';
 import './styles.css';
 
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Enter from './component/enter';
+import Login from "./component/login";
+import Register from "./component/register";
 import Address from "./component/address";
 import Search from "./component/Search";
 import AllProducts from './component/AllProducts';
@@ -19,6 +23,14 @@ import Three from "./component/Three";
 import Four from "./component/Four";
 
 import Test from "./test";
+
+// ReactDOM.render(
+//   <Router>
+//     <App />
+//   </Router>,
+//   document.getElementById('root')
+// );
+
 function App() {
 
 
@@ -62,9 +74,12 @@ function App() {
     case "/component/AllProducts":
       component = <AllProducts state={state} />
       break
-    case "/component/address":
-      component = <Address state={state} />
-      break
+    case "/component/login":
+        component = <Login state={state} />
+        break
+    // case "/component/address":
+    //   component = <Address state={state} />
+    //   break
 
     case "/component/Search":
       component = <Search state={state} />
@@ -94,12 +109,23 @@ function App() {
 
 
   return (
+    // <div style={{ zIndex: 2 }}>
+    //   <Navbar></Navbar>
+    //   {component}
 
-    <div style={{ zIndex: 2 }}>
-      <Navbar></Navbar>
-      {component}
-
-    </div>
+    // </div>
+    <Router>
+        <div style={{ zIndex: 2 }}>
+            <Navbar />
+            {component}
+            <Routes>
+                <Route exact path="/" render={() => <Enter state={state} />} />
+                <Route path="/login" render={() => <Login state={state} />} />
+                <Route path="/register" element={<Register />} />
+                {/* ...其他路由 */}
+            </Routes>
+        </div>
+    </Router>
 
 
 
@@ -108,5 +134,6 @@ function App() {
 
 
 }
+
 
 export default App;

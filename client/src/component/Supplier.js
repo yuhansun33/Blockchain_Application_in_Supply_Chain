@@ -35,7 +35,6 @@ export default function Supplier({ state, open, Close, Id, Ad }) {
         const { contract } = state;
         const Supplier = document.querySelector("#Supplier").value;
         await contract.methods.AddSupplier(Id, Supplier).send({ from: Ad, gas: '1000000' });
-
         alert("Adding is successul");
         window.location.reload();
 
@@ -67,7 +66,9 @@ export default function Supplier({ state, open, Close, Id, Ad }) {
                         <button class="cancelbtn" onClick={Close}>cancle</button>
                     </div>
                 </form>
+
             </div>
+
 
 
 

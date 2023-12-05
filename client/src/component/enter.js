@@ -24,7 +24,7 @@ const Enter = ({ state }) => {
         const ProductType = document.querySelector("#ProductType").value;
         const ProductPrice = document.querySelector("#ProductPrice").value;
         const Receiver = document.querySelector("#Receiver").value;
-        await contract.methods.createProduct(ProductName, ProductType, ProductPrice, Receiver).send({ from: Manufacturer_Address, gas: '1000000' });
+        await contract.methods.createProduct(ProductName, ProductType, ProductPrice, Receiver, Manufacturer_Address).send({ from: Manufacturer_Address, gas: '1000000' });
 
         alert("Tracking is successul");
         window.location.reload();

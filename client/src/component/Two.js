@@ -23,7 +23,7 @@ export default function Two({ state }) {
             const data = await contract.methods.getManufacturerAddress().call();
 
 
-            const Fliter = product.filter((pd) => pd.Serial === '2' & pd.Manufacturer === data);
+            const Fliter = product.filter((pd) => pd.Serial.toString() === '2' & pd.Manufacturer === data);
             setProduct(Fliter);
         }
         contract && N_Product();
@@ -134,7 +134,7 @@ export default function Two({ state }) {
 
                                         }}
                                     >
-                                        {pd.ProductPrice}
+                                        {Number(pd.ProductPrice)}
                                     </td>
                                     <td
                                         style={{
@@ -147,7 +147,7 @@ export default function Two({ state }) {
 
                                         }}
                                     >
-                                        {new Date(pd.TimeStamp * 1000).toLocaleString()}
+                                        {new Date(Number(pd.TimeStamp) * 1000).toLocaleString()}
                                     </td>
                                     <td
                                         style={{
@@ -174,7 +174,7 @@ export default function Two({ state }) {
 
                                         }}
                                     >
-                                        {pd.Serial}
+                                        {Number(pd.Serial)}
                                     </td>
                                     <td
                                         style={{

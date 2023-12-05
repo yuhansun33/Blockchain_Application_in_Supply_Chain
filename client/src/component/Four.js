@@ -11,7 +11,7 @@ export default function Four({ state }) {
             const data = await contract.methods.getManufacturerAddress().call();
 
 
-            const Fliter = product.filter((pd) => pd.Serial === '4' & pd.Manufacturer === data);
+            const Fliter = product.filter((pd) => pd.Serial.toString() === '4' & pd.Manufacturer === data);
             setProduct(Fliter);
         }
         contract && N_Product();
@@ -115,7 +115,7 @@ export default function Four({ state }) {
 
                                         }}
                                     >
-                                        {pd.ProductPrice}
+                                        {Number(pd.ProductPrice)}
                                     </td>
                                     <td
                                         style={{
@@ -128,7 +128,7 @@ export default function Four({ state }) {
 
                                         }}
                                     >
-                                        {new Date(pd.TimeStamp * 1000).toLocaleString()}
+                                        {new Date(Number(pd.TimeStamp) * 1000).toLocaleString()}
                                     </td>
                                     <td
                                         style={{
@@ -155,7 +155,7 @@ export default function Four({ state }) {
 
                                         }}
                                     >
-                                        {pd.Serial}
+                                        {Number(pd.Serial)}
                                     </td>
                                     {/* <td
                                         style={{

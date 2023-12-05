@@ -24,7 +24,7 @@ const OverStyle = {
     zIndex: 1
 
 }
-export default function Product({ open, isClose, record, com }) {
+export default function Product({ open, isClose, record }) {
 
     if (!open) return null
 
@@ -58,24 +58,21 @@ export default function Product({ open, isClose, record, com }) {
                     </tr>
                     <tr>
 
-                        <td>價格 :{record[6]}</td>
-                        <td>紀錄時間 :{new Date(record[7] * 1000).toLocaleString()}</td>
+                        <td>價格 :{Number(record[6])}</td>
+                        <td>紀錄時間 :{new Date(Number(record[7]) * 1000).toLocaleString()}</td>
                     </tr>
                     <tr>
 
                         <td>狀態 :{record[8]}</td>
-                        <td>階段 :{record[0]}</td>
+                        <td>階段 :{Number(record[0])}</td>
                     </tr>
 
                 </table>
-                <td>上游 : </td>
+                {/* <td>原料 :</td>
+
                 {com.map((pd) => {
                     return (<tr><td>{pd}</td></tr>)
-                })}
-
-
-
-
+                })} */}
 
                 <button onClick={isClose} >Close</button>
 

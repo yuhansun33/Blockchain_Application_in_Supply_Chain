@@ -19,7 +19,8 @@ export default function Navbar() {
 
 
             <li>
-                <a href='/component/address'>Manufacturer</a>
+                {/* <a href='/component/address'>Manufacturer</a> */}
+                <a href='/component/login'>Manufacturer</a>
             </li>
 
             <li className="services">

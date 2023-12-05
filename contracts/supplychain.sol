@@ -14,16 +14,26 @@ contract SupplyChain {
         uint ProductPrice;
         mapping(uint => StateTime) State;
     }
-    //狀態
+    //狀態 (包含time)
     struct StateTime {
         uint TimeStamp;
         string State;
     }
-    // 上游原料
-    struct Supplier {
-        address _product;
-        string Supply;
+    //狀態列表
+    string[5] public states;
+    //初始化狀態列表
+    constructor() {
+        states[0] = "SETTING";
+        states[1] = "PROCESS";
+        states[2] = "FINISH";
+        states[3] = "IN_TRANSIT";
+        states[4] = "ARRIVED";
     }
+    // 上游原料
+    // struct Supplier {
+    //     address _product;
+    //     string Supply;
+    // }
     // 玩整產品細項
     struct ProductDetail {
         uint Serial;
@@ -42,17 +52,18 @@ contract SupplyChain {
     address[] ProductAddresses;
     string Manufacturer_Address;
     ProductDetail[] N_Products;
-    Supplier[] suppliers;
+
+    // Supplier[] suppliers;
 
     // 加入上游原料
-    function AddSupplier(address _addr, string memory _supplier) public {
-        suppliers.push(Supplier(_addr, _supplier));
-    }
+    // function AddSupplier(address _addr, string memory _supplier) public {
+    //     suppliers.push(Supplier(_addr, _supplier));
+    // }
 
     // 取得上游原料
-    function getSupplier() public view returns (Supplier[] memory) {
-        return suppliers;
-    }
+    // function getSupplier() public view returns (Supplier[] memory) {
+    //     return suppliers;
+    // }
 
     // 輸入製造商Address
     function enterAddress(string memory _Manufacturer_Address) public {
@@ -65,18 +76,24 @@ contract SupplyChain {
     }
 
     // 創建產品，且初始化狀態預設剩下的狀態階段時間戳記為0，以及複製產品紀錄至products、N_Products
+    uint nonce;
+
     function createProduct(
         string memory _ProductName,
         string memory _ProductType,
         uint _ProductPrice,
-        address _Receiver
+        address _Receiver,
+        address _Manufacturer
     ) public {
+        nonce++;
         address addr = address(
-            bytes20(sha256(abi.encodePacked(msg.sender, block.timestamp)))
+            bytes20(
+                sha256(abi.encodePacked(msg.sender, block.timestamp, nonce))
+            )
         );
         myproduct[addr].Serial = 0;
 
-        myproduct[addr].Manufacturer = msg.sender;
+        myproduct[addr].Manufacturer = _Manufacturer;
         myproduct[addr].ProductID = addr;
         myproduct[addr].ProductName = _ProductName;
         myproduct[addr].Receiver = _Receiver;
@@ -85,7 +102,7 @@ contract SupplyChain {
 
         myproduct[addr].ProductType = _ProductType;
         myproduct[addr].ProductPrice = _ProductPrice;
-        StateTime memory _state = StateTime(block.timestamp, "SEETING");
+        StateTime memory _state = StateTime(block.timestamp, states[0]);
         myproduct[addr].State[myproduct[addr].Serial] = _state;
 
         myproduct[addr].State[1].TimeStamp = 0;
@@ -97,14 +114,14 @@ contract SupplyChain {
         products.push(
             ProductDetail(
                 myproduct[addr].Serial,
-                msg.sender,
+                _Manufacturer,
                 addr,
                 _Receiver,
                 _ProductName,
                 _ProductType,
                 _ProductPrice,
                 block.timestamp,
-                "SEETING"
+                states[0]
             )
         );
 
@@ -126,142 +143,40 @@ contract SupplyChain {
     // 改變狀態時一併更新時間，複製產品紀錄至products、N_Products
     function ChangeState(address addr) public {
         myproduct[addr].Serial++;
-        if (myproduct[addr].Serial == 1) {
-            StateTime memory _state = StateTime(block.timestamp, "PROCESS");
-            myproduct[addr].State[myproduct[addr].Serial] = _state;
-            myproduct[addr].State[1].TimeStamp = block.timestamp;
-            Delete(addr);
+        uint _serial = myproduct[addr].Serial;
 
-            products.push(
-                ProductDetail(
-                    myproduct[addr].Serial,
-                    msg.sender,
-                    addr,
-                    myproduct[addr].Receiver,
-                    myproduct[addr].ProductName,
-                    myproduct[addr].ProductType,
-                    myproduct[addr].ProductPrice,
-                    block.timestamp,
-                    "PROCESS"
-                )
-            );
+        StateTime memory _state = StateTime(block.timestamp, states[_serial]);
+        myproduct[addr].State[_serial] = _state;
+        myproduct[addr].State[_serial].TimeStamp = block.timestamp;
+        Delete(addr);
 
-            N_Products.push(
-                ProductDetail(
-                    myproduct[addr].Serial,
-                    msg.sender,
-                    addr,
-                    myproduct[addr].Receiver,
-                    myproduct[addr].ProductName,
-                    myproduct[addr].ProductType,
-                    myproduct[addr].ProductPrice,
-                    block.timestamp,
-                    "PROCESS"
-                )
-            );
-        }
-        if (myproduct[addr].Serial == 2) {
-            StateTime memory _state = StateTime(block.timestamp, "FINISH");
-            myproduct[addr].State[myproduct[addr].Serial] = _state;
-            myproduct[addr].State[2].TimeStamp = block.timestamp;
-            Delete(addr);
+        products.push(
+            ProductDetail(
+                myproduct[addr].Serial,
+                myproduct[addr].Manufacturer,
+                addr,
+                myproduct[addr].Receiver,
+                myproduct[addr].ProductName,
+                myproduct[addr].ProductType,
+                myproduct[addr].ProductPrice,
+                block.timestamp,
+                states[_serial]
+            )
+        );
 
-            products.push(
-                ProductDetail(
-                    myproduct[addr].Serial,
-                    msg.sender,
-                    addr,
-                    myproduct[addr].Receiver,
-                    myproduct[addr].ProductName,
-                    myproduct[addr].ProductType,
-                    myproduct[addr].ProductPrice,
-                    block.timestamp,
-                    "FINISH"
-                )
-            );
-
-            N_Products.push(
-                ProductDetail(
-                    myproduct[addr].Serial,
-                    msg.sender,
-                    addr,
-                    myproduct[addr].Receiver,
-                    myproduct[addr].ProductName,
-                    myproduct[addr].ProductType,
-                    myproduct[addr].ProductPrice,
-                    block.timestamp,
-                    "FINISH"
-                )
-            );
-        }
-        if (myproduct[addr].Serial == 3) {
-            StateTime memory _state = StateTime(block.timestamp, "IN_TRANSIT");
-            myproduct[addr].State[myproduct[addr].Serial] = _state;
-            myproduct[addr].State[3].TimeStamp = block.timestamp;
-            Delete(addr);
-
-            products.push(
-                ProductDetail(
-                    myproduct[addr].Serial,
-                    msg.sender,
-                    addr,
-                    myproduct[addr].Receiver,
-                    myproduct[addr].ProductName,
-                    myproduct[addr].ProductType,
-                    myproduct[addr].ProductPrice,
-                    block.timestamp,
-                    "IN_TRANSIT"
-                )
-            );
-
-            N_Products.push(
-                ProductDetail(
-                    myproduct[addr].Serial,
-                    msg.sender,
-                    addr,
-                    myproduct[addr].Receiver,
-                    myproduct[addr].ProductName,
-                    myproduct[addr].ProductType,
-                    myproduct[addr].ProductPrice,
-                    block.timestamp,
-                    "IN_TRANSIT"
-                )
-            );
-        }
-        if (myproduct[addr].Serial == 4) {
-            StateTime memory _state = StateTime(block.timestamp, "ARRIVED");
-            myproduct[addr].State[myproduct[addr].Serial] = _state;
-            myproduct[addr].State[4].TimeStamp = block.timestamp;
-            Delete(addr);
-
-            products.push(
-                ProductDetail(
-                    myproduct[addr].Serial,
-                    msg.sender,
-                    addr,
-                    myproduct[addr].Receiver,
-                    myproduct[addr].ProductName,
-                    myproduct[addr].ProductType,
-                    myproduct[addr].ProductPrice,
-                    block.timestamp,
-                    "ARRIVED"
-                )
-            );
-
-            N_Products.push(
-                ProductDetail(
-                    myproduct[addr].Serial,
-                    msg.sender,
-                    addr,
-                    myproduct[addr].Receiver,
-                    myproduct[addr].ProductName,
-                    myproduct[addr].ProductType,
-                    myproduct[addr].ProductPrice,
-                    block.timestamp,
-                    "ARRIVED"
-                )
-            );
-        }
+        N_Products.push(
+            ProductDetail(
+                myproduct[addr].Serial,
+                myproduct[addr].Manufacturer,
+                addr,
+                myproduct[addr].Receiver,
+                myproduct[addr].ProductName,
+                myproduct[addr].ProductType,
+                myproduct[addr].ProductPrice,
+                block.timestamp,
+                states[_serial]
+            )
+        );
     }
 
     // 取得所有產品編號
@@ -290,9 +205,7 @@ contract SupplyChain {
     // 取得特定產品細項
     function getProduct(
         address id
-    )
-        public
-        view
+    ) public view
         returns (
             uint,
             address,

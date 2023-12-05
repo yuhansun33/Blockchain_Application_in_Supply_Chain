@@ -30,11 +30,11 @@ export default function State({ open, isClose, record, Id }) {
 
     // 確認各個階段的時間戳記是否不為預設值，不是0則進行日期轉換
     function Check(day) {
-        if (day === '0') {
+        if (Number(day) === 0) {
             return 0
         }
         else {
-            return new Date(day * 1000).toLocaleString()
+            return new Date(Number(day) * 1000).toLocaleString()
         }
     }
 

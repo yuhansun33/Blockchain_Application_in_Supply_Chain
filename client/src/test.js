@@ -38,7 +38,7 @@ function Test({ state }) {
         const { contract } = state;
         for (let i = 0; i < data.length; i++) {
             k.push(Object.values(data[i])[1]);
-            await contract.methods.createProduct(Object.values(data[i])[1], Object.values(data[i])[2], Object.values(data[i])[3], Object.values(data[i])[4]).send({ from: Manufacturer_Address, gas: '1000000' });
+            await contract.methods.createProduct(Object.values(data[i])[1], Object.values(data[i])[2], Object.values(data[i])[3], Object.values(data[i])[4], Manufacturer_Address).send({ from: Manufacturer_Address, gas: '1000000' });
 
         }
         alert("Tracking is successul");

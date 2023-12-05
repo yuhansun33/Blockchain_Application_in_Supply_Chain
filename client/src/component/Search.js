@@ -9,19 +9,20 @@ export default function Search({ state }) {
     // 控制彈出視窗的開關
     const [isOpen, setOpen] = useState(false);
     const [record, setRecord] = useState([]);
-    const [component, setCom] = useState([]);
+    // const [component, setCom] = useState([]);
+    // const [supply, setSupply] = useState([]);
     // 查詢特定產品編號的資料以及上游原料產品編號
     async function productAddress() {
         const { contract } = state;
         const Product_Address = document.querySelector("#product").value;
         const record = await contract.methods.getProduct(Product_Address).call();
-        const com = await contract.methods.getSupplier().call();
-        const Fliter = com.filter((c) => c._product === Product_Address);
-        const data = Fliter.map((pd) => {
-            return (pd.Supply)
-        })
-
-        setCom(data);
+        // const com = await contract.methods.getSupplier().call();
+        // const Fliter = com.filter((c) => c._product === Product_Address);
+        // setSupply(Fliter);
+        // const data = Fliter.map((pd) => {
+        //     return (pd.Supply)
+        // })
+        // setCom(Fliter);
         setRecord(record);
         setOpen(true);
 
@@ -40,7 +41,7 @@ export default function Search({ state }) {
                     輸入產品ID
                 </button>
                 {/* 彈出視窗 */}
-                <Product open={isOpen} isClose={() => setOpen(false)} record={record} com={component}>
+                <Product open={isOpen} isClose={() => setOpen(false)} record={record} >
                     fancy modal
                 </Product>
 
