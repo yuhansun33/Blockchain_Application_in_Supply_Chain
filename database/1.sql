@@ -10,6 +10,3 @@ CREATE TABLE `user` (
         `UserID`
     )
 );
-
-INSERT INTO user (UserName, UserAddr, UserPassword)
-VALUES ('DDD', '0xc8d6Ff5bD64754025077306a1Ef866Df4b5f278A', '123321');
