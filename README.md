@@ -32,7 +32,7 @@
 
 ## **3.1 研究流程圖**
 
-![flow diagram.png](Project/flow_diagram.png)
+![flow diagram.png](README/flow_diagram.png)
 
 ## **3.2 模擬環境設定**
 
