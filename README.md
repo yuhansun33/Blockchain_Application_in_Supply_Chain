@@ -1,4 +1,4 @@
-# Blockchain Application in Supply Chain: Simulation and Implementation
+# Blockchain_Application_in_Supply_Chain
 
 # **1. 研究背景**
 
@@ -32,7 +32,7 @@
 
 ## **3.1 研究流程圖**
 
-[https://lh7-us.googleusercontent.com/fzPXaiy3itYHa9i4BXmxCFPDb28ZugfrkgrgS7f__9Lc0QqZccFQC386FIYTXh_oSdZ7j9MYs_BpbAn7kNJxvpyV_wJAnahROVoO_b9dOZRZ2kr91YncNX2Af7IKDVdo42tGhSWnWgOcKJIj-XjbVHU](https://lh7-us.googleusercontent.com/fzPXaiy3itYHa9i4BXmxCFPDb28ZugfrkgrgS7f__9Lc0QqZccFQC386FIYTXh_oSdZ7j9MYs_BpbAn7kNJxvpyV_wJAnahROVoO_b9dOZRZ2kr91YncNX2Af7IKDVdo42tGhSWnWgOcKJIj-XjbVHU)
+![flow diagram.png](Project/flow_diagram.png)
 
 ## **3.2 模擬環境設定**
 
@@ -64,7 +64,7 @@ Web3.js和Ethers.js是兩個常用的JavaScript資源庫，用於與以太坊區
 
 本研究使用RemixIDE網頁應用程式，輔助完成Solidity智能合約的撰寫。RemixIDE專門用於開發、測試和驗證以太坊智能合約，因此在本地網路上建立區塊鏈時，可以使用網頁RemixIDE創建並編寫智能合約，然後通過模擬測試和調試來驗證合約的功能。在研究中，常透過RemixIDE模擬智能合約內部狀態的變更，並觀察在不同情況下合約的反應，而這皆有助於確認合約的狀態轉換是否如預期般正確。
 
-[https://lh7-us.googleusercontent.com/mKNv0vZ8jOWDnZUqbIP9PaF_NyQTxdYAP09FTRvMiCcJGYbfVEyd3-WWgPHbHEieDYSFhbGGde_g-I-G20G664ynCZVYAMwR1Cx5izxN6MJ4ZQIX80frtFgJEHbEHrkhHkNwWnoIVtFezt4BT3KBnbY](https://lh7-us.googleusercontent.com/mKNv0vZ8jOWDnZUqbIP9PaF_NyQTxdYAP09FTRvMiCcJGYbfVEyd3-WWgPHbHEieDYSFhbGGde_g-I-G20G664ynCZVYAMwR1Cx5izxN6MJ4ZQIX80frtFgJEHbEHrkhHkNwWnoIVtFezt4BT3KBnbY)
+![implement_flow.png](README/implement_flow.png)
 
 ## **3.4 實作流程細項**
 
@@ -78,7 +78,7 @@ Web3.js和Ethers.js是兩個常用的JavaScript資源庫，用於與以太坊區
 
 程式檔架構圖
 
-![Untitled](Project%20aeff408e5242459e8b081a51e254ed35/Untitled.png)
+![file_tree.png](README/file_tree.png)
 
 **模擬供應鏈:** 上游廠商製造->運送->下游廠商收貨
 
@@ -87,7 +87,7 @@ Web3.js和Ethers.js是兩個常用的JavaScript資源庫，用於與以太坊區
 | 1 | 從excel匯入或手動輸入新增產品細項，並將創建資料儲存至區塊鏈。 |
 | 2 | 當產品的狀態改變，紀錄產品從上游製造到達下游廠商收貨的每環節與時間在區塊鏈上，且透過產品編號來查詢產品狀態以及詳細內容。 |
 
-![Untitled](Project%20aeff408e5242459e8b081a51e254ed35/Untitled%201.png)
+![state_flow.png](README/state_flow.png)
 
 ### **3.4.3 資安：廠商登入登出，登入密碼亂數轉換**
 
@@ -97,7 +97,7 @@ Web3.js和Ethers.js是兩個常用的JavaScript資源庫，用於與以太坊區
 
 透過編寫Arduino程式，我們建立了一個高度靈活的RFID感應系統，該系統與感應卡、感應鑰匙扣等設備配合使用，模擬了產品在供應鏈中不同階段的感應紀錄。每個感應卡、感應鑰匙扣甚至是常見的悠遊卡都具有其獨特的ID，這使得我們能夠在整個供應鏈過程中為產品建立特定的識別標誌，無論是紀錄或切換不同階段，皆能保持其獨特性。在紀錄的流程中，我們需要先創建並儲存產品的ID，這樣一來，當產品通過RFID感應器時，系統便能準確且有效地記錄下該產品的位置或階段變化。這種系統不僅提供了對產品流動的高度追蹤和管理，同時也為供應鏈的透明性和準確性帶來了極大的增益。
 
-[https://lh7-us.googleusercontent.com/0eg74535Zdb2EYEpnh01YKR9LhghO2XtogbdFPThY2pTO9AhOOq8cnu54xEXTSS8z20c2j21MVh8R8gy5ayrNvRlehaiiQPVxsC68pzBAIbQiEV4Kv4tEcnG1Wl7KX46o3nVRz9iWBfjLQwsRC-YL08](https://lh7-us.googleusercontent.com/0eg74535Zdb2EYEpnh01YKR9LhghO2XtogbdFPThY2pTO9AhOOq8cnu54xEXTSS8z20c2j21MVh8R8gy5ayrNvRlehaiiQPVxsC68pzBAIbQiEV4Kv4tEcnG1Wl7KX46o3nVRz9iWBfjLQwsRC-YL08)
+![Arduino.jpg](README/Arduino.jpg)
 
 ### **3.4.5 匯入EXCEL**
 
