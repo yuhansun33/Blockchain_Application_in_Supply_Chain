@@ -20290,12 +20290,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xE2527dfB5d6852Ef98c2C59421ceD1a8Cc95112d",
-      "transactionHash": "0x5ac924646626027f021fc6c1804a1a6cb0ed4800b2d1f951f72c46db9aa099c4"
+      "address": "0x6Cfe06924C7F3134E4Abd5827d2adefF1715dF9D",
+      "transactionHash": "0xc870492ec261628c3aad07684874790433b3423439cc7e01d44fa460e7a81664"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-01-07T06:01:44.132Z",
+  "updatedAt": "2024-02-05T10:31:01.116Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
